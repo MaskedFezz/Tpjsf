@@ -9,7 +9,7 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Gestion des services</title>
             </f:facet>
         </h:head>
 
@@ -35,7 +35,8 @@
                                 <p:menuitem value="services" outcome="service.xhtml" icon="ui-icon-star"/>
                                 <p:menuitem value="employees" outcome="employe.xhtml" icon="ui-icon-star"/>
                                 <p:menuitem value="graphe" outcome="index.xhtml" icon="ui-icon-star"/>
-
+                                <p:menuitem value="chef" outcome="chefCollabsByService.xhtml" icon="ui-icon-star"/>
+                                <p:menuitem value="disconnect" outcome="loginForm.xhtml" icon="ui-icon-close"/>
                             </p:submenu>
                         </p:menu> 
                     </h:form>
@@ -60,7 +61,7 @@
 
                     <f:view>
                         <h:form id="f2">
-                            <p:dataTable id="tab" var="service" value="#{serviceBean.services}"  editable="true" paginator="true" rows="10">
+                            <p:dataTable id="tab" var="service" value="#{serviceBean.services}"  editable="true" >
 
                                 <f:facet name="header">
                                     Liste des services
@@ -79,9 +80,6 @@
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
-
-                                <!-- Add other columns for Service entity attributes as needed -->
-
                                 <p:column headerText="Modifier">
                                     <p:rowEditor />
                                 </p:column>

@@ -9,7 +9,7 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Gestion des employes</title>
             </f:facet>
         </h:head>
 
@@ -35,6 +35,8 @@
                                 <p:menuitem value="services" outcome="service.xhtml" icon="ui-icon-star"/>
                                 <p:menuitem value="employees" outcome="employe.xhtml" icon="ui-icon-star"/>
                                 <p:menuitem value="graphe" outcome="index.xhtml" icon="ui-icon-star"/>
+                                <p:menuitem value="chef" outcome="chefCollabsByService.xhtml" icon="ui-icon-star"/>
+                                <p:menuitem value="disconnect" outcome="loginForm.xhtml" icon="ui-icon-close"/>
 
                             </p:submenu>
                         </p:menu> 
@@ -49,22 +51,22 @@
                         <p:panel header="Gestion des employés">
                             <p:panelGrid columns="3" id="p1">
                                 <p:outputLabel value="Nom"/>
-                                <p:inputText id="nom" value="#{EmployeBean.employe.nom}" required="true"/>
+                                <p:inputText id="nom" value="#{employeBean.employe.nom}" required="true"/>
                                 <p:message for="nom" />
 
                                 <p:outputLabel value="Prenom"/>
-                                <p:inputText id="prenom" value="#{EmployeBean.employe.prenom}" required="true"/>
+                                <p:inputText id="prenom" value="#{employeBean.employe.prenom}" required="true"/>
                                 <p:message for="prenom" />
 
                                 <p:outputLabel value="Date de Naissance"/>
-                                <p:calendar id="dateDeNaissance" value="#{EmployeBean.employe.dateNaissance}" pattern="yyyy-MM-dd" required="true"/>
+                                <p:calendar id="dateDeNaissance" value="#{employeBean.employe.dateNaissance}" pattern="yyyy-MM-dd" required="true"/>
                                 <p:message for="dateDeNaissance" />
 
                                 <p:outputLabel value="Photo"/>
-                                <p:inputText id="photo" value="#{EmployeBean.employe.photo}" />
+                                <p:inputText id="photo" value="#{employeBean.employe.photo}" />
                                 <p:message for="photo" />
                                 <p:outputLabel value="Service"/>
-                                <p:selectOneMenu id="service" value="#{EmployeBean.employe.service.id}" required="true">
+                                <p:selectOneMenu id="service" value="#{employeBean.employe.service.id}" required="true">
                                     <f:selectItem itemLabel="Select One" itemValue=""/>
                                     <f:selectItems value="#{serviceBean.services}" var="s"
                                                    itemLabel="#{s.nom}" itemValue="#{s.id}"/>
@@ -72,9 +74,9 @@
                                 <p:message for="service" />
 
                                 <p:outputLabel value="Chef"/>
-                                <p:selectOneMenu id="chef" value="#{EmployeBean.selectedChef.id}" required="true">
+                                <p:selectOneMenu id="chef" value="#{employeBean.selectedChef.id}" required="false">
                                     <f:selectItem itemLabel="Select One" itemValue=""/>
-                                    <f:selectItems value="#{EmployeBean.chefs}" var="c" itemLabel="#{c.nom} #{c.prenom}" itemValue="#{c.id}" />
+                                    <f:selectItems value="#{employeBean.chefs}" var="c" itemLabel="#{c.nom} #{c.prenom}" itemValue="#{c.id}" />
                                 </p:selectOneMenu>
 
                                 <p:message for="chef" />
@@ -85,21 +87,21 @@
 
 
                             </p:panelGrid>
-                            <p:commandButton value="Ajouter" actionListener="#{EmployeBean.onCreateAction}" update=":f2:tab, f1:p1"/>
+                            <p:commandButton value="Ajouter" actionListener="#{employeBean.onCreateAction}" update=":f2:tab, f1:p1"/>
                         </p:panel>
 
                     </h:form>
 
                     <f:view>
                         <h:form id="f2">
-                            <p:dataTable id="tab" var="employe" value="#{EmployeBean.employes}" editable="true" paginator="true" rows="10">
+                            <p:dataTable id="tab" var="employe" value="#{employeBean.employes}" editable="true" >
 
                                 <f:facet name="header">
                                     Liste des employés
                                 </f:facet>
 
-                                <p:ajax event="rowEdit" listener="#{EmployeBean.onEdit}" />
-                                <p:ajax event="rowEditCancel" listener="#{EmployeBean.onCancel}" />
+                                <p:ajax event="rowEdit" listener="#{employeBean.onEdit}" />
+                                <p:ajax event="rowEditCancel" listener="#{employeBean.onCancel}" />
 
                                 <p:column headerText="Nom" style="width: 15%">
                                     <p:cellEditor>
@@ -174,7 +176,7 @@
                                 <p:column headerText="Supprimer" style="width: 5%">
                                     <p:commandButton id="Supprimer" icon="ui-icon-trash" update=":f2:confirmDialog"
                                                      oncomplete="PF('confirmation').show()" title="Supprimer">
-                                        <f:setPropertyActionListener target="#{EmployeBean.employe}" value="#{employe}" />
+                                        <f:setPropertyActionListener target="#{employeBean.employe}" value="#{employe}" />
                                     </p:commandButton>
                                 </p:column>
                             </p:dataTable>
@@ -184,14 +186,14 @@
                                       widgetVar="confirmation">
                                 <h:panelGrid id="display" columns="2" cellpadding="4"
                                              style="margin:0 auto;" />
-                                <h:inputHidden value="#{EmployeBean.employe.id}" id="supp"
+                                <h:inputHidden value="#{employeBean.employe.id}" id="supp"
                                                required="true" />
 
                                 <p:outputLabel
                                     value="Etes vous sûr de vouloir supprimer cet employé ?" />
                                 <p:commandButton id="confirm" value="Oui"
                                                  update=":f2:tab" oncomplete="PF('confirmation').hide();location.reload();"
-                                                 actionListener="#{EmployeBean.onDeleteAction}" />
+                                                 actionListener="#{employeBean.onDeleteAction}" />
                                 <p:commandButton id="decline" value="Non"
                                                  onclick="PF('confirmation').hide()" type="button" />
 

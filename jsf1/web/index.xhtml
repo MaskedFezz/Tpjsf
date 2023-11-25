@@ -18,32 +18,35 @@
                 </h:form>
             </p:layoutUnit>
 
- 
+
 
             <p:layoutUnit position="west" size="250" header="Menu" collapsible="true">
                 <h:form>
                     <p:menu>
                         <p:submenu label="Navigations">
-                                   <p:menuitem value="services" outcome="service.xhtml" icon="ui-icon-star"/>
-                                <p:menuitem value="employees" outcome="employe.xhtml" icon="ui-icon-star"/>
-                                 <p:menuitem value="graphe" outcome="index.xhtml" icon="ui-icon-star"/>
+                            <p:menuitem value="services" outcome="service.xhtml" icon="ui-icon-star"/>
+                            <p:menuitem value="employees" outcome="employe.xhtml" icon="ui-icon-star"/>
+                            <p:menuitem value="graphe" outcome="index.xhtml" icon="ui-icon-star"/>
+                            <p:menuitem value="chef" outcome="chefCollabsByService.xhtml" icon="ui-icon-star"/>
+                            <p:menuitem value="disconnect" outcome="loginForm.xhtml" icon="ui-icon-close"/>
+
                         </p:submenu>
                     </p:menu> 
                 </h:form>
             </p:layoutUnit>
-         <p:layoutUnit position="center">
-    <p:panel header="Statistiques">
-        <p:panelGrid columns="3" columnClasses="chartColumn">
+            <p:layoutUnit position="center">
+                <p:panel header="Statistiques">
+                    <p:panelGrid columns="3" columnClasses="chartColumn">
 
-           
 
-            <p:outputPanel>
-                <p:barChart value="#{serviceBean.initBarModel()}" title="Nombre d’employés par service" style="width:500%; height: 300px"/>
-            </p:outputPanel>
 
-        </p:panelGrid>
-    </p:panel>
-</p:layoutUnit>
+                        <p:outputPanel>
+                            <p:barChart value="#{serviceBean.initBarModel()}" title="Nombre d’employés par service" style="width:500%; height: 300px"/>
+                        </p:outputPanel>
+
+                    </p:panelGrid>
+                </p:panel>
+            </p:layoutUnit>
 
         </p:layout>
     </h:body>

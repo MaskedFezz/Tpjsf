@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ma.projet.service;
+package ma.projet.services;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,59 +16,14 @@ import org.hibernate.Session;
 
 /**
  *
- * @author LACHGAR
+ * @author HP
  */
-public class ServiceService implements IDao<Service>{
+public class ServiceService extends AbstractFacade<Service> {
 
     @Override
-    public boolean create(Service o) {
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(o);
-        session.getTransaction().commit();
-        return true;
+    protected Class<Service> getEntityClass() {
+        return Service.class;
     }
-
-    @Override
-    public boolean update(Service o) {
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(o);
-        session.getTransaction().commit();
-        return true;
-    }
-
-    @Override
-    public boolean delete(Service o) {
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(o);
-        session.flush();
-        session.getTransaction().commit();
-        return true;
-    }
-
-    @Override
-    public Service getById(int id) {
-        Service service  = null;
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        service  = (Service) session.get(Service.class, id);
-        session.getTransaction().commit();
-        return service;
-    }
-
-    @Override
-    public List<Service> getAll() {
-        List <Service> services = null;
-      
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        services  = session.createQuery("from Service").list();
-        session.getTransaction().commit();
-        return services;
-    }
-    
     
     public List<Object[]> nbservice(){
         List<Object[]> services = null;

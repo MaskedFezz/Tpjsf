@@ -6,62 +6,66 @@ import javax.faces.bean.ManagedBean;
 import ma.projet.beans.Employe;
 import ma.projet.beans.Service;
 
-import ma.projet.service.ServiceService;
+import ma.projet.services.ServiceService;
 import ma.projet.services.EmployeService;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
-@ManagedBean(name = "EmployeBean")
+@ManagedBean(name = "employeBean")
 public class EmployeBean {
-    private Employe Employe;
+
+    private Employe employe;
     private Service service;
-    private List<Employe> Employes;
-    private List<Employe> EmployesBetweenDates;
-    private EmployeService EmployeService;
+    private List<Employe> employes;
+    private List<Employe> employesBetweenDates;
+    private EmployeService employeService;
     private ServiceService serviceService;
     private List<Employe> chefs;
     private Employe selectedChef;
     private static ChartModel barModel;
     private Date date1;
     private Date date2;
-    
+    private List<Employe> collaborateurs;
+    private List<Employe> chef;
+    private Service selectedService;
 
     public EmployeBean() {
-        Employe = new Employe();
-            Employe.setService(new Service());
-        EmployeService = new EmployeService();
+        employe = new Employe();
+        employe.setService(new Service());
+        employeService = new EmployeService();
         serviceService = new ServiceService();
-        chefs = EmployeService.getAll();
+        chefs = employeService.getAll();
         selectedChef = new Employe();
+        selectedService = new Service();
     }
 
-    public List<Employe> getEmployes() {
-        if (Employes == null) {
-            Employes = EmployeService.getAll();
+    public List<Employe> getemployes() {
+        if (employes == null) {
+            employes = employeService.getAll();
         }
-        return Employes;
+        return employes;
     }
 
-    public void setEmployes(List<Employe> Employes) {
-        this.Employes = Employes;
+    public void setemployes(List<Employe> employes) {
+        this.employes = employes;
     }
 
     public EmployeService getEmployeService() {
-        return EmployeService;
+        return employeService;
     }
 
-    public void setEmployeService(EmployeService EmployeService) {
-        this.EmployeService = EmployeService;
+    public void setEmployeService(EmployeService employeService) {
+        this.employeService = employeService;
     }
 
     public Employe getEmploye() {
-        return Employe;
+        return employe;
     }
 
-    public void setEmploye(Employe Employe) {
-        this.Employe = Employe;
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
     }
 
     public Date getDate1() {
@@ -81,47 +85,47 @@ public class EmployeBean {
     }
 
     public String onCreateAction() {
-   EmployeService employeService = new EmployeService();
+        EmployeService employeService = new EmployeService();
 
-    // Set the selected chef to the employe
-    Employe.setChef(selectedChef);
+        // Set the selected chef to the employe
+        employe.setChef(selectedChef);
 
-    // Create the employe
-    employeService.create(Employe);
+        // Create the employe
+        employeService.create(employe);
 
-    // Reset employe and selectedChef
-    Employe = new Employe();
-    selectedChef = null;
+        // Reset employe and selectedChef
+        employe = new Employe();
+        selectedChef = null;
 
-    return null;
+        return null;
     }
 
     public String onDeleteAction() {
-        EmployeService.delete(EmployeService.getById(Employe.getId()));
+        employeService.delete(employeService.getById(employe.getId()));
         return null;
     }
 
     public List<Employe> serviceLoad() {
-        for (Employe e : EmployeService.getAll()) {
+        for (Employe e : employeService.getAll()) {
             if (e.getService().equals(service)) {
-                Employes.add(e);
+                employes.add(e);
             }
         }
-        return Employes;
+        return employes;
     }
 
     public void load() {
         System.out.println(service.getNom());
         service = serviceService.getById(service.getId());
-        getEmployes();
+        getemployes();
     }
 
     public void onEdit(RowEditEvent event) {
-        Employe = (Employe) event.getObject();
-        Service service = serviceService.getById(this.Employe.getService().getId());
-        Employe.setService(service);
-        Employe.getService().setNom(service.getNom());
-        EmployeService.update(Employe);
+        employe = (Employe) event.getObject();
+        Service service = serviceService.getById(this.employe.getService().getId());
+        employe.setService(service);
+        employe.getService().setNom(service.getNom());
+        employeService.update(employe);
     }
 
     public void onCancel(RowEditEvent event) {
@@ -131,25 +135,23 @@ public class EmployeBean {
         return barModel;
     }
 
-public ChartModel initBarModel() {
-    CartesianChartModel model = new CartesianChartModel();
-    ChartSeries Employes = new ChartSeries();
-    Employes.setLabel("Employes");
-    model.setAnimate(true);
+    public ChartModel initBarModel() {
+        CartesianChartModel model = new CartesianChartModel();
+        ChartSeries employes = new ChartSeries();
+        employes.setLabel("employes");
+        model.setAnimate(true);
 
-    for (Object[] e : EmployeService.nbEmployeByChef()) {
-        Employes.set((String) e[1], Integer.parseInt(e[0].toString()));
+        for (Object[] e : employeService.nbEmployeByChef()) {
+            employes.set((String) e[1], Integer.parseInt(e[0].toString()));
+        }
+
+        model.addSeries(employes);
+
+        return model;
     }
 
-    model.addSeries(Employes);
-
-    return model;
-}
-
-
-
-    public List<Employe> EmployeLoad() {
-        EmployesBetweenDates = EmployeService.getbydates(date1, date2);
+    public List<Employe> employeLoad() {
+        employesBetweenDates = employeService.getbydates(date1, date2);
         return null;
     }
 
@@ -162,22 +164,75 @@ public ChartModel initBarModel() {
     }
 
     public List<Employe> getEmployesBetweenDates() {
-        return EmployesBetweenDates;
+        return employesBetweenDates;
     }
 
-    public void setEmployesBetweenDates(List<Employe> EmployesBetweenDates) {
-        this.EmployesBetweenDates = EmployesBetweenDates;
+    public void setEmployesBetweenDates(List<Employe> employesBetweenDates) {
+        this.employesBetweenDates = employesBetweenDates;
     }
+
     public List<Employe> getChefs() {
-    return chefs;
-}
+        return chefs;
+    }
 
-public Employe getSelectedChef() {
-    return selectedChef;
-}
+    public Employe getSelectedChef() {
+        return selectedChef;
+    }
 
-public void setSelectedChef(Employe selectedChef) {
-    this.selectedChef = selectedChef;
-}
+    public void setSelectedChef(Employe selectedChef) {
+        this.selectedChef = selectedChef;
+    }
+
+    public void loadCollaborateurs() {
+        System.out.println(selectedService);
+
+        collaborateurs = employeService.getCollaborateurs(selectedService);
+
+    }
+
+    public void loadChef() {
+        System.out.println(selectedService);
+        chef = employeService.getChef(selectedService);
+    }
+
+    public List<Employe> getEmployes() {
+        return employes;
+    }
+
+    public void setEmployes(List<Employe> employes) {
+        this.employes = employes;
+    }
+
+    public ServiceService getServiceService() {
+        return serviceService;
+    }
+
+    public void setServiceService(ServiceService serviceService) {
+        this.serviceService = serviceService;
+    }
+
+    public List<Employe> getCollaborateurs() {
+        return collaborateurs;
+    }
+
+    public void setCollaborateurs(List<Employe> collaborateurs) {
+        this.collaborateurs = collaborateurs;
+    }
+
+    public List<Employe> getChef() {
+        return chef;
+    }
+
+    public void setChef(List<Employe> chef) {
+        this.chef = chef;
+    }
+
+    public Service getSelectedService() {
+        return selectedService;
+    }
+
+    public void setSelectedService(Service selectedService) {
+        this.selectedService = selectedService;
+    }
 
 }

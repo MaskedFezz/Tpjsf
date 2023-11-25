@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 import ma.projet.beans.Employe;
 import ma.projet.beans.Service;
 
-import ma.projet.service.ServiceService;
+import ma.projet.services.ServiceService;
 import ma.projet.services.EmployeService;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.chart.CartesianChartModel;

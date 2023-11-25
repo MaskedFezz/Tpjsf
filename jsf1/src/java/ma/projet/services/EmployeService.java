@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ma.projet.services;
 
+import ma.projet.beans.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,82 +18,62 @@ import org.hibernate.Session;
  *
  * @author LACHGAR
  */
-public class EmployeService implements IDao<Employe>{
+public class EmployeService extends AbstractFacade<Employe> {
 
     @Override
-    public boolean create(Employe o) {
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(o);
-        session.getTransaction().commit();
-        return true;
+    protected Class<Employe> getEntityClass() {
+        return Employe.class;
     }
 
-    @Override
-    public boolean update(Employe o) {
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(o);
-        session.getTransaction().commit();
-        return true;
-    }
-
-    @Override
-    public boolean delete(Employe o) {
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(o);
-        session.flush();
-        session.getTransaction().commit();
-        return true;
-    }
-
-    @Override
-    public Employe getById(int id) {
-        Employe employe  = null;
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        employe  = (Employe) session.get(Employe.class, id);
-        session.getTransaction().commit();
-        return employe;
-    }
-
-    @Override
-    public List<Employe> getAll() {
-        List <Employe> employes = null;
-      
-        Session session  = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        employes  = session.createQuery("from Employe").list();
-        session.getTransaction().commit();
-        return employes;
-    }
-    
-    
-    public List<Object[]> nbemploye(){
+    public List<Object[]> nbemploye() {
         List<Object[]> employes = null;
-        Session session  = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        employes  = session.createQuery("select count(m.marque), m.marque from Employe m group by m.marque").list();
+        employes = session.createQuery("select count(m.marque), m.marque from Employe m group by m.marque").list();
         session.getTransaction().commit();
         return employes;
     }
-    
-    public List<Employe> getbydates(Date d1 , Date d2){
-        List <Employe> employes = new ArrayList<>();
-        Session session  = HibernateUtil.getSessionFactory().openSession();
+
+    public List<Employe> getbydates(Date d1, Date d2) {
+        List<Employe> employes = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-         employes  = session.createQuery("from Employe m where m.dateAchat between :d1 and :d2").setParameter("d1", d1).setParameter("d2", d2).list();
+        employes = session.createQuery("from Employe m where m.dateAchat between :d1 and :d2").setParameter("d1", d1).setParameter("d2", d2).list();
         session.getTransaction().commit();
         return employes;
-        
+
     }
+
     public List<Object[]> nbEmployeByChef() {
-    List<Object[]> Employes = null;
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Employes = session.createQuery("select count(e.nom), e.chef.nom from Employe e group by e.chef.nom").list();
-    session.getTransaction().commit();
-    return Employes;
-}
+        List<Object[]> Employes = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Employes = session.createQuery("select count(e.nom), e.chef.nom from Employe e group by e.chef.nom").list();
+        session.getTransaction().commit();
+        return Employes;
+    }
+
+    public List<Employe> getCollaborateurs(Service service) {
+        List<Employe> collaborateurs;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        collaborateurs = session.createQuery("SELECT e FROM Employe e JOIN e.service s WHERE s.id = :serviceId AND e.chef IS NOT NULL")
+                .setParameter("serviceId", service.getId())
+                .list();
+
+        session.getTransaction().commit();
+        return collaborateurs;
+    }
+
+    public List<Employe> getChef(Service service) {
+        List<Employe> collaborateurs;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        collaborateurs = session.createQuery("SELECT e FROM Employe e JOIN e.service s WHERE s.id = :serviceId AND e.chef IS NULL")
+                .setParameter("serviceId", service.getId())
+                .list();
+
+        session.getTransaction().commit();
+        return collaborateurs;
+    }
 }
