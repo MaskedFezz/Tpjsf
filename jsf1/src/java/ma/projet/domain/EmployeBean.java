@@ -9,6 +9,8 @@ import ma.projet.beans.Service;
 import ma.projet.services.ServiceService;
 import ma.projet.services.EmployeService;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -30,6 +32,7 @@ public class EmployeBean {
     private List<Employe> collaborateurs;
     private List<Employe> chef;
     private Service selectedService;
+    private TreeNode root;
 
     public EmployeBean() {
         employe = new Employe();
@@ -39,6 +42,8 @@ public class EmployeBean {
         chefs = employeService.getAll();
         selectedChef = new Employe();
         selectedService = new Service();
+        root = new DefaultTreeNode("Root", null);
+        loadTree();
     }
 
     public List<Employe> getemployes() {
@@ -233,6 +238,40 @@ public class EmployeBean {
 
     public void setSelectedService(Service selectedService) {
         this.selectedService = selectedService;
+    }
+
+public void loadTree() {
+    root.getChildren().clear(); // Clear old nodes
+    List<Service> services = serviceService.getAll();
+
+    for (Service service : services) {
+        // Create a node for the service
+        TreeNode serviceNode = new DefaultTreeNode("service", service, root);
+
+        // Display chief under service
+        List<Employe> chiefs = employeService.getChef(service);
+        if (!chiefs.isEmpty()) {
+            Employe chief = chiefs.get(0);
+
+            // Create a node for the chief under the service node
+            TreeNode chiefNode = new DefaultTreeNode("chief", chief, serviceNode);
+
+            // Display employees under chief
+            for (Employe employe : employeService.getCollaborateurs(service)) {
+                // Create a node for each employee under the chief node
+                TreeNode employeeNode = new DefaultTreeNode("employee", employe, chiefNode);
+            }
+        }
+    }
+}
+
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
     }
 
 }

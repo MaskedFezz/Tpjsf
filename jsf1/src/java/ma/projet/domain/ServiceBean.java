@@ -8,6 +8,8 @@ import ma.projet.beans.Service;
 import ma.projet.services.ServiceService;
 import ma.projet.services.EmployeService;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -22,7 +24,8 @@ public class ServiceBean {
     private List<Employe> Employes;
     private EmployeService EmployeService;
     private static ChartModel barModel;
-
+    private Employe chef;
+ private TreeNode root;
     public ServiceBean() {
         service = new Service();
         serviceService = new ServiceService();
@@ -127,5 +130,84 @@ public class ServiceBean {
         model.addSeries(services);
 
         return model;
+    }
+      public void loadChef() {
+        System.out.println(service);
+        chef = (Employe) EmployeService.getChef(service);
+    }
+
+    public Employe getEmploye() {
+        return Employe;
+    }
+
+    public void setEmploye(Employe Employe) {
+        this.Employe = Employe;
+    }
+
+    public ServiceService getServiceService() {
+        return serviceService;
+    }
+
+    public void setServiceService(ServiceService serviceService) {
+        this.serviceService = serviceService;
+    }
+
+    public EmployeService getEmployeService() {
+        return EmployeService;
+    }
+
+    public void setEmployeService(EmployeService EmployeService) {
+        this.EmployeService = EmployeService;
+    }
+
+    public Employe getChef() {
+        return chef;
+    }
+
+    public void setChef(Employe chef) {
+        this.chef = chef;
+    }
+//  public TreeNode getRoot() {
+//        TreeNode root = new DefaultTreeNode("root", null);
+//
+//        for (Service service : services) {
+//            TreeNode serviceNode = new DefaultTreeNode(service, root);
+//
+//            // Load chief under service
+//             chef = (Employe) EmployeService.getChef(service);
+//            if (chef != null) {
+//                TreeNode chefNode = new DefaultTreeNode(chef, serviceNode);
+//            }
+//
+//            // Load employees under service
+//            List<Employe> employees = EmployeService.getCollaborateurs(service);
+//            for (Employe employee : employees) {
+//                TreeNode employeNode = new DefaultTreeNode(employee, serviceNode);
+//            }
+//        }
+//
+//        return root;
+//    }
+public void loadTree() {
+        root.getChildren().clear(); // Clear old nodes
+
+        for (Service service : services) {
+            // Create a node for the service
+            TreeNode serviceNode = new DefaultTreeNode(service, root);
+
+            // Display chief under service
+            Employe chief = EmployeService.getChef(service).get(0);
+            if (chief != null) {
+                // Create a node for the chief under the service node
+                TreeNode chiefNode = new DefaultTreeNode(chief, serviceNode);
+
+                // Display employees under chief
+                for (Employe employe : service.getEmployes()) {
+                    // Create a node for each employee under the chief node
+                    TreeNode employeNode = new DefaultTreeNode(employe , chiefNode);
+                }
+
+            }
+        }
     }
 }
