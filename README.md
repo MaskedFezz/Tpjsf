@@ -65,4 +65,4 @@ The project is structured as follows:
 
 ## Leader and collaborators by service (Tree)
 
-<img width="927" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/81d34ea9-400e-42ed-a384-a79bb7271720">
+<img width="920" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/a32f2f29-8c83-4f68-b660-8445a1d643d3">
