@@ -31,36 +31,38 @@ The project is structured as follows:
 1. **Database**: Configure the database connection parameters in the `hibernate.cfg.xml` file.
 2. **Application Server**: Deploy the application on a Java-compatible server (e.g., Glassfish).
 
-# Database Illustration
+## Login page
+<img width="918" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/d03dfd31-6f9f-404f-91dc-143b92e2c272">
+
+## Menu
+<img width="189" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/57ef426e-22a3-4da5-a206-28c3f011aa60">
 
 ## Employee Count Statistics by Service
-<img width="960" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/ab054460-4099-4c9e-90a1-25fa07d46cb2">
+<img width="926" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/17690f63-6463-4f55-aa68-eddab69dd2a3">
 
 # Service
-<img width="921" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/3eabc493-b0ce-4fda-917f-c3d5e9aab727">
+<img width="924" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/c6afef4b-9407-41c5-99ea-0b1f94cca7b5">
 ## Addition
 
-<img width="929" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/fb57f7c1-9eb2-4c51-9ea4-05dd0916a197">
+<img width="918" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/54eaf1c1-37dc-4119-80e5-a28f9c9b4c43">
 
 ## Deletion
-<img width="916" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/2aa8da17-387d-4f24-9f30-15ecca1ea159">
+<img width="920" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/b2adda5c-afeb-4812-8b1b-0e80c97d9cec">
 
 
 ## Modification
-<img width="918" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/b793ed7a-f9e5-4868-ba63-1af5674c667c">
+<img width="919" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/9c25ff2d-48ae-4ee7-a206-ea72a7d51273">
 
 
 ## Employees
-<img width="915" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/5d888184-2d49-4708-8eee-de8359bd79a0">
-
-## Deletion
-<img width="926" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/8cf95b70-0134-4ffd-969f-dc7b214daeaa">
+<img width="926" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/57a2a048-1ff4-44ed-89c2-bcbc6bbf5652">
+<img width="917" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/ae4f036c-0ee0-4183-a908-aeece6444c18">
 
 
+## Leader and collaborators by service (Tab)
+<img width="925" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/45104768-066d-4e14-bb1b-cd900c66b252">
+<img width="920" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/123b673d-558a-4be7-aee9-64d88a9c518a">
 
-## Modification
-<img width="919" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/97a8b890-3a13-4630-bb78-4ff42e4573f8">
-<img width="925" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/e155e31e-7fe6-4fc2-869b-4af5a0da5443">
+## Leader and collaborators by service (Tree)
 
-
-
+<img width="920" alt="image" src="https://github.com/MaskedFezz/Tpjsf/assets/130797834/a32f2f29-8c83-4f68-b660-8445a1d643d3">
